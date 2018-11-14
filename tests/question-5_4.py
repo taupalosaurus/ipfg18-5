@@ -6,6 +6,30 @@ test = {
       'cases': [
         {
           'code': r"""
+          >>> type(y) == types.FunctionType
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> len(param) # wrong number of argument
+          2
+          """,
+          'hidden': False,
+          'locked': False
+        }
+      ],
+      'scored': True,
+      'setup': 'import types; import inspect; param = inspect.signature(y).parameters',
+      'teardown': '',
+      'type': 'doctest'
+    },
+    {
+      'cases': [
+        {
+          'code': r"""
           >>> np.allclose(y(1, 1), -3.9050000000000002)
           True
           """,
@@ -14,7 +38,15 @@ test = {
         },
         {
           'code': r"""
-          >>> sanity_check(y, -1, -1)
+          >>> sanity_check(y, -1, 1)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> sanity_check(y, 1, -1)
           True
           """,
           'hidden': False,
@@ -26,9 +58,9 @@ test = {
 import numpy as np
 def sanity_check(fxn, arg1, arg2):
     try:
-        y(-1, -1)
+        fxn(arg1, arg2)
         return False
-    except:
+    except ValueError:
         return True
     return False
     """,

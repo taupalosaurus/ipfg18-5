@@ -6,7 +6,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> my_factorial(0)==math.factorial(0)
+          >>> type(isInt) == types.FunctionType
           True
           """,
           'hidden': False,
@@ -14,38 +14,71 @@ test = {
         },
         {
           'code': r"""
-          >>> my_factorial(1)==math.factorial(1)
-          True
+          >>> len(param) # wrong number of argument
+          1
           """,
           'hidden': False,
           'locked': False
-        },
-        {
-          'code': r"""
-          >>> my_factorial(42)==math.factorial(42)
-          True
-          """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
-          >>> sanity_check()
-          True
-          """,
-          'hidden': False,
-          'locked': False
-        },
+        }
       ],
       'scored': True,
-      'setup': """import math
-def sanity_check():
-    try:
-        my_factorial(-7)
-    except ValueError:
-        return True
-    return False
-      """,
+      'setup': 'import types; import inspect; param = inspect.signature(isInt).parameters',
+      'teardown': '',
+      'type': 'doctest'
+    },
+    {
+      'cases': [
+        {
+          'code': r"""
+          >>> isInt(random_int)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> isInt(random_float)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> isInt(random_string)
+          False
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> isInt(random_int_string)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> isInt(random_float_string)
+          False
+          """,
+          'hidden': False,
+          'locked': False
+        }
+      ],
+      'scored': True,
+      'setup': """
+import random
+import string
+random_int = random.randint(1,100)
+random_float = random.random()
+random_string = ''.join(random.choices(string.ascii_letters, k=5))
+random_int_string = ''.join(random.choices(string.digits, k=3))
+random_float_string = '.'.join(random.choices(string.digits, k=2))
+""",
       'teardown': '',
       'type': 'doctest'
     }

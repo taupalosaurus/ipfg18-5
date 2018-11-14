@@ -7,7 +7,9 @@
     "tests": {
       "tests/question-5_4.py": "ok_test",
       "tests/question-5_5.py": "ok_test",
-      "tests/question-5_6.py": "ok_test"
+      "tests/question-5_6.py": "ok_test",
+      "tests/question-5_7.py": "ok_test",
+      "tests/question-5_8.py": "ok_test"
     },
     "default_tests": [
     ],

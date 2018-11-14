@@ -1,12 +1,12 @@
 test = {
-  'name': 'question 5.6',
+  'name': 'question 5.7',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          >>> type(my_factorial) == types.FunctionType
+          >>> type(calc_material_velocity) == types.FunctionType
           True
           """,
           'hidden': False,
@@ -15,14 +15,14 @@ test = {
         {
           'code': r"""
           >>> len(param) # wrong number of argument
-          1
+          3
           """,
           'hidden': False,
           'locked': False
         }
       ],
       'scored': True,
-      'setup': 'import types; import inspect; param = inspect.signature(my_factorial).parameters',
+      'setup': 'import types; import inspect; param = inspect.signature(calc_material_velocity).parameters',
       'teardown': '',
       'type': 'doctest'
     },
@@ -30,7 +30,7 @@ test = {
       'cases': [
         {
           'code': r"""
-          >>> my_factorial(0)==math.factorial(0)
+          >>> np.allclose(calc_material_velocity(*_m1), _v1)
           True
           """,
           'hidden': False,
@@ -38,7 +38,7 @@ test = {
         },
         {
           'code': r"""
-          >>> my_factorial(1)==math.factorial(1)
+          >>> np.allclose(calc_material_velocity(*_m2), _v2)
           True
           """,
           'hidden': False,
@@ -46,7 +46,7 @@ test = {
         },
         {
           'code': r"""
-          >>> my_factorial(42)==math.factorial(42)
+          >>> np.allclose(calc_material_velocity(*_m3), _v3)
           True
           """,
           'hidden': False,
@@ -54,7 +54,23 @@ test = {
         },
         {
           'code': r"""
-          >>> sanity_check()
+          >>> sanity_check(-6.85, 20.9, 2580)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> sanity_check(6.85, -20.9, 2580)
+          True
+          """,
+          'hidden': False,
+          'locked': False
+        },
+        {
+          'code': r"""
+          >>> sanity_check(-6.85, 20.9, -2580)
           True
           """,
           'hidden': False,
@@ -62,14 +78,21 @@ test = {
         },
       ],
       'scored': True,
-      'setup': """import math
-def sanity_check():
+      'setup': """
+_m1 = (44, 38, 2650)
+_v1 = (6.039700938074968, 4.074772826171499)
+_m2 = (6.85, 20.9, 2580)
+_v2 = (3.411865600135066, 1.6294289673655376)
+_m3 = (0, 2.29, 1000)
+_v3 = (1.5132745950421556, 0.0)
+import numpy as np
+def sanity_check(arg1, arg2, arg3):
     try:
-        my_factorial(-7)
+        calc_material_velocity(arg1, arg2, arg3)
     except ValueError:
         return True
     return False
-      """,
+""",
       'teardown': '',
       'type': 'doctest'
     }
