@@ -75,9 +75,9 @@ import random
 import string
 random_int = random.randint(1,100)
 random_float = random.random()
-random_string = ''.join(random.choices(string.ascii_letters, k=5))
-random_int_string = ''.join(random.choices(string.digits, k=3))
-random_float_string = '.'.join(random.choices(string.digits, k=2))
+random_string = ''.join([random.choice(string.ascii_letters) for i in range(5)])
+random_int_string = ''.join([random.choice(string.digits) for i in range(3)])
+random_float_string = '.'.join([random.choice(string.digits) for i in range(2)])
 """,
       'teardown': '',
       'type': 'doctest'
